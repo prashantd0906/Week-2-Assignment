@@ -1,11 +1,20 @@
-import {Container, TextField, Typography} from '@mui/material';
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../auth/AuthContext';
-import {BackgroundBox, LoginButton, LoginPaper} from './Login.styles';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import {
+  BackgroundBox,
+  LoginPaper,
+  Title,
+  Subtitle,
+  ErrorText,
+  StyledTextField,
+  LoginButton,
+} from './Login.styles';
+import { Container } from '@mui/material';
+
 
 const Login = () => {
-  const {login} = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -34,39 +43,29 @@ const Login = () => {
     <BackgroundBox>
       <Container maxWidth="xs">
         <LoginPaper elevation={6}>
-          <Typography variant="h4" fontWeight="bold" gutterBottom>
-            Welcome Back 👋
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{mb: 3}}>
+          <Title variant="h4">Welcome Back 👋</Title>
+          <Subtitle variant="body2" color="text.secondary">
             Please login to continue
-          </Typography>
+          </Subtitle>
 
           <form onSubmit={handleSubmit}>
-            {error && (
-              <Typography color="error" variant="body2" sx={{mb: 2}}>
-                {error}
-              </Typography>
-            )}
+            {error && <ErrorText variant="body2">{error}</ErrorText>}
 
-            <TextField
+            <StyledTextField
               fullWidth
               label="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{mb: 2}}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               variant="outlined"
-              InputProps={{sx: {borderRadius: 2}}}
             />
 
-            <TextField
+            <StyledTextField
               fullWidth
               type="password"
               label="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              sx={{mb: 3}}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               variant="outlined"
-              InputProps={{sx: {borderRadius: 2}}}
             />
 
             <LoginButton type="submit" variant="contained" fullWidth>

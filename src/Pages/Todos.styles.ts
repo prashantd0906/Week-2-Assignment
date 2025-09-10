@@ -19,7 +19,6 @@ export const StyledDivider = styled(Divider)(({theme}: {theme: Theme}) => ({
 // Card container
 export const CardBox = styled(Paper)(({theme}: {theme: Theme}) => ({
   padding: theme.spacing(3),
-  borderRadius: (theme.shape.borderRadius as number) * 2,
   marginBottom: theme.spacing(4),
 }));
 
@@ -77,13 +76,11 @@ export const DeleteButton = styled(Button)(() => ({
 }));
 
 export const AddButton = styled(Button)(() => ({
-  textTransform: 'none',
   borderRadius: '8px',
   marginTop: '16px',
 }));
 
 export const SubmitButton = styled(Button)(() => ({
-  textTransform: 'none',
   borderRadius: '10px',
   marginTop: '24px',
   padding: '10px 20px',
@@ -92,7 +89,6 @@ export const SubmitButton = styled(Button)(() => ({
 
 // Logout
 export const LogoutButton = styled(Button)(() => ({
-  textTransform: 'none',
   borderRadius: '8px',
   borderColor: 'white',
   color: 'white',

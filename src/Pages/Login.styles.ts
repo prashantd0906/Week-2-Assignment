@@ -1,35 +1,46 @@
-import {Box, Paper, Button} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/system';
+import { Box, Paper, Button, Typography, TextField } from '@mui/material';
 
+// Background
 export const BackgroundBox = styled(Box)(() => ({
-  minHeight: '100vh',
   display: 'flex',
+  minHeight: '100vh',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%)',
-  padding: '16px',
+  backgroundColor: '#f5f5f5',
 }));
 
+// Container
 export const LoginPaper = styled(Paper)(() => ({
-  // Card container
   padding: '32px',
-  borderRadius: '16px',
-  textAlign: 'center',
-  backdropFilter: 'blur(8px)',
 }));
 
-export const LoginButton = styled(Button)(() => ({
-  // Gradient button
-  marginTop: '16px',
-  padding: '12px',
-  fontSize: '1rem',
+// Typography
+export const Title = styled(Typography)(() => ({
   fontWeight: 'bold',
-  borderRadius: '12px',
-  textTransform: 'none',
-  background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
-  transition: '0.3s',
-  '&:hover': {
-    background: 'linear-gradient(90deg, #764ba2 0%, #667eea 100%)',
-    transform: 'scale(1.02)',
+  marginBottom: '8px',
+}));
+
+export const Subtitle = styled(Typography)(() => ({
+  marginBottom: '24px',
+}));
+
+export const ErrorText = styled(Typography)(() => ({
+  color: 'red',
+  marginBottom: '16px',
+}));
+
+// TextField
+export const StyledTextField = styled(TextField)(() => ({
+  marginBottom: '16px',
+  '& .MuiOutlinedInput-root': {
+    borderRadius: 8,
   },
+}));
+
+// Button
+export const LoginButton = styled(Button)(() => ({
+  textTransform: 'none',
+  borderRadius: 8,
+  padding: '10px 0',
 }));
