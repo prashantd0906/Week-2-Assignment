@@ -1,56 +1,70 @@
-import {
-  Paper,
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Stack,
-  Typography,
-  Button,
-  TextField,
-} from '@mui/material';
-import type {Theme} from '@mui/material';
+import {Box, Button, List, Paper, Stack, TextField} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
-export const Container = styled(Paper)(({theme}: {theme: Theme}) => ({
-  padding: theme.spacing(4),
-  maxWidth: 600,
-  margin: 'auto',
-  marginTop: theme.spacing(5),
+// Main container
+export const Container = styled(Box)(() => ({
+  maxWidth: '800px',
+  margin: '0 auto',
+  padding: '24px',
 }));
 
-export const HeaderBox = styled(Box)({
+// Header
+export const HeaderBox = styled(Box)(() => ({
+  background: 'linear-gradient(90deg, #667eea, #764ba2)',
+  borderRadius: '12px',
+  padding: '16px',
+  marginBottom: '32px',
+  color: 'white',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: 24,
-});
+}));
 
-export const StyledList = styled(List)({
-  marginBottom: 24,
-});
+// Styled list
+export const StyledList = styled(List)(() => ({
+  maxHeight: 200,
+  overflowY: 'auto',
+}));
 
-export const TaskStack = styled(Stack)({
-  marginBottom: 16,
-  flexDirection: 'row',
+// Stack for each task input + button
+export const TaskStack = styled(Stack)(() => ({
+  display: 'flex',
   alignItems: 'center',
-  gap: 8,
-});
+  gap: '12px',
+  marginBottom: '12px',
+}));
 
-export const TaskTextField = styled(TextField)({
-  flex: 1,
-});
+// Task input
+export const TaskTextField = styled(TextField)(() => ({
+  flexGrow: 1,
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '8px',
+  },
+}));
 
-export const DeleteButton = styled(Button)({
-  minWidth: 'auto',
-});
+// Buttons
+export const DeleteButton = styled(Button)(() => ({
+  textTransform: 'none',
+  borderRadius: '8px',
+}));
 
-export const AddButton = styled(Button)({
-  marginBottom: 16,
-});
+export const AddButton = styled(Button)(() => ({
+  textTransform: 'none',
+  borderRadius: '8px',
+  marginTop: '16px',
+}));
 
-export const SubmitButton = styled(Button)({
-  width: '100%',
-});
+export const SubmitButton = styled(Button)(() => ({
+  textTransform: 'none',
+  borderRadius: '10px',
+  marginTop: '24px',
+  padding: '10px 20px',
+  fontWeight: 'bold',
+}));
 
-export {Typography, Button, ListItem, ListItemText, Box};
+// Card wrapper for sections
+export const CardBox = styled(Paper)(() => ({
+  padding: '24px',
+  borderRadius: '12px',
+  marginBottom: '32px',
+}));

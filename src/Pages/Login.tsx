@@ -1,7 +1,8 @@
+import {Container, TextField, Typography} from '@mui/material';
 import {useState} from 'react';
-import {useAuth} from '../auth/AuthContext';
 import {useNavigate} from 'react-router-dom';
-import {Button, Container, TextField, Typography, Paper} from '@mui/material';
+import {useAuth} from '../auth/AuthContext';
+import {BackgroundBox, LoginButton, LoginPaper} from './Login.styles';
 
 const Login = () => {
   const {login} = useAuth();
@@ -30,50 +31,51 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Paper elevation={3} sx={{p: 4, mt: 8, borderRadius: 3}}>
-        <Typography variant="h5" align="center" gutterBottom>
-          Login
-        </Typography>
+    <BackgroundBox>
+      <Container maxWidth="xs">
+        <LoginPaper elevation={6}>
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+            Welcome Back 👋
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{mb: 3}}>
+            Please login to continue
+          </Typography>
 
-        <form onSubmit={handleSubmit}>
-          {error && (
-            <Typography color="error" variant="body2" sx={{mb: 2}}>
-              {error}
-            </Typography>
-          )}
+          <form onSubmit={handleSubmit}>
+            {error && (
+              <Typography color="error" variant="body2" sx={{mb: 2}}>
+                {error}
+              </Typography>
+            )}
 
-          <TextField
-            fullWidth
-            label="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            sx={{mb: 2}}
-            variant="outlined"
-          />
+            <TextField
+              fullWidth
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={{mb: 2}}
+              variant="outlined"
+              InputProps={{sx: {borderRadius: 2}}}
+            />
 
-          <TextField
-            fullWidth
-            type="password"
-            label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            sx={{mb: 2}}
-            variant="outlined"
-          />
+            <TextField
+              fullWidth
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{mb: 3}}
+              variant="outlined"
+              InputProps={{sx: {borderRadius: 2}}}
+            />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{mt: 3}}
-          >
-            Login
-          </Button>
-        </form>
-      </Paper>
-    </Container>
+            <LoginButton type="submit" variant="contained" fullWidth>
+              Login
+            </LoginButton>
+          </form>
+        </LoginPaper>
+      </Container>
+    </BackgroundBox>
   );
 };
 

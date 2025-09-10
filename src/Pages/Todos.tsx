@@ -1,22 +1,20 @@
-import {useEffect, useState} from 'react';
+import {Box, Divider, ListItem, ListItemText, Typography} from '@mui/material';
 import axios from 'axios';
-import {Formik, Form, FieldArray} from 'formik';
-import * as Yup from 'yup';
+import {FieldArray, Form, Formik} from 'formik';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import * as Yup from 'yup';
 import {useAuth} from '../auth/AuthContext';
 import {
+  AddButton,
+  CardBox,
   Container,
+  DeleteButton,
   HeaderBox,
   StyledList,
+  SubmitButton,
   TaskStack,
   TaskTextField,
-  DeleteButton,
-  AddButton,
-  SubmitButton,
-  Typography,
-  ListItem,
-  ListItemText,
-  Box,
 } from './Todos.styles';
 
 // Validation
@@ -27,7 +25,6 @@ const schema = Yup.object({
 });
 
 const initialValues = {
-  //initial value
   todos: [''],
 };
 
@@ -43,7 +40,6 @@ export default function TodoForm() {
   };
 
   useEffect(() => {
-    // Fetch from API
     const fetchTodos = async () => {
       try {
         const res = await axios.get(
@@ -55,92 +51,108 @@ export default function TodoForm() {
         console.error('Error fetching todos:', err);
       }
     };
-
     fetchTodos();
   }, []);
 
   return (
     <Container>
+      {/* Header */}
       <HeaderBox>
-        <Typography variant="h5">Todo List</Typography>
-        <DeleteButton variant="outlined" color="error" onClick={handleLogout}>
+        <Typography variant="h5" fontWeight="bold">
+          Todo Dashboard
+        </Typography>
+        <DeleteButton variant="outlined" color="inherit" onClick={handleLogout}>
           Logout
         </DeleteButton>
       </HeaderBox>
 
-      <Typography variant="h6" gutterBottom>
-        API Todos (fetched):
-      </Typography>
-      <StyledList>
-        {apiTodos.map((task, i) => (
-          <ListItem key={i}>
-            <ListItemText primary={task} />
-          </ListItem>
-        ))}
-      </StyledList>
+      {/* API Todos */}
+      <CardBox elevation={3}>
+        <Typography variant="h6" gutterBottom>
+          API Todos (fetched)
+        </Typography>
+        <Divider sx={{mb: 2}} />
+        <StyledList>
+          {apiTodos.map((task, i) => (
+            <ListItem key={i}>
+              <ListItemText primary={task} />
+            </ListItem>
+          ))}
+        </StyledList>
+      </CardBox>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        onSubmit={(values, {resetForm}) => {
-          setSubmittedTodos(values.todos); // store submitted todos
-          resetForm();
-        }}
-      >
-        {({values, errors, touched, handleChange, handleBlur}) => {
-          const todosTouched = touched.todos as boolean[] | undefined;
-          const todosErrors = errors.todos as string[] | undefined;
+      {/* Form Section */}
+      <CardBox elevation={3}>
+        <Typography variant="h6" gutterBottom>
+          Add Your Todos
+        </Typography>
+        <Divider sx={{mb: 2}} />
 
-          return (
-            <Form>
-              <FieldArray name="todos">
-                {({push, remove}) => (
-                  <Box>
-                    {values.todos.map((todo, index) => (
-                      <TaskStack key={index}>
-                        <TaskTextField
-                          label={`Task ${index + 1}`}
-                          name={`todos[${index}]`}
-                          value={todo}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          error={Boolean(
-                            todosTouched?.[index] && todosErrors?.[index],
-                          )}
-                          helperText={
-                            todosTouched?.[index] && todosErrors?.[index]
-                          }
-                        />
-                        <DeleteButton
-                          color="error"
-                          variant="outlined"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </DeleteButton>
-                      </TaskStack>
-                    ))}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={schema}
+          onSubmit={(values, {resetForm}) => {
+            setSubmittedTodos(values.todos);
+            resetForm();
+          }}
+        >
+          {({values, errors, touched, handleChange, handleBlur}) => {
+            const todosTouched = touched.todos as boolean[] | undefined;
+            const todosErrors = errors.todos as string[] | undefined;
 
-                    <AddButton variant="contained" onClick={() => push('')}>
-                      Add Task
-                    </AddButton>
-                  </Box>
-                )}
-              </FieldArray>
+            return (
+              <Form>
+                <FieldArray name="todos">
+                  {({push, remove}) => (
+                    <Box>
+                      {values.todos.map((todo, index) => (
+                        <TaskStack key={index}>
+                          <TaskTextField
+                            label={`Task ${index + 1}`}
+                            name={`todos[${index}]`}
+                            value={todo}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(
+                              todosTouched?.[index] && todosErrors?.[index],
+                            )}
+                            helperText={
+                              todosTouched?.[index] && todosErrors?.[index]
+                            }
+                          />
+                          <DeleteButton
+                            color="error"
+                            variant="outlined"
+                            onClick={() => remove(index)}
+                          >
+                            Remove
+                          </DeleteButton>
+                        </TaskStack>
+                      ))}
 
-              <SubmitButton type="submit" variant="contained">
-                Submit
-              </SubmitButton>
-            </Form>
-          );
-        }}
-      </Formik>
+                      <AddButton variant="contained" onClick={() => push('')}>
+                        ➕ Add Task
+                      </AddButton>
+                    </Box>
+                  )}
+                </FieldArray>
 
+                <SubmitButton type="submit" variant="contained">
+                  Submit
+                </SubmitButton>
+              </Form>
+            );
+          }}
+        </Formik>
+      </CardBox>
+
+      {/* Submitted Todos */}
       {submittedTodos.length > 0 && (
-        <>
-          <Typography variant="h6" sx={{mt: 3}}>
-            Submitted Todos:
+        <CardBox elevation={3}>
+          <Typography variant="h6" gutterBottom>
+            Submitted Todos
           </Typography>
+          <Divider sx={{mb: 2}} />
           <StyledList>
             {submittedTodos.map((task, i) => (
               <ListItem key={i}>
@@ -148,7 +160,7 @@ export default function TodoForm() {
               </ListItem>
             ))}
           </StyledList>
-        </>
+        </CardBox>
       )}
     </Container>
   );
