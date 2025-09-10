@@ -56,7 +56,6 @@ export default function TodoForm() {
 
   return (
     <Container>
-      {/* Header */}
       <HeaderBox>
         <Typography variant="h5" fontWeight="bold">
           Todo Dashboard
@@ -66,7 +65,6 @@ export default function TodoForm() {
         </DeleteButton>
       </HeaderBox>
 
-      {/* API Todos */}
       <CardBox elevation={3}>
         <Typography variant="h6" gutterBottom>
           API Todos (fetched)
@@ -81,7 +79,6 @@ export default function TodoForm() {
         </StyledList>
       </CardBox>
 
-      {/* Form Section */}
       <CardBox elevation={3}>
         <Typography variant="h6" gutterBottom>
           Add Your Todos
@@ -146,7 +143,6 @@ export default function TodoForm() {
         </Formik>
       </CardBox>
 
-      {/* Submitted Todos */}
       {submittedTodos.length > 0 && (
         <CardBox elevation={3}>
           <Typography variant="h6" gutterBottom>

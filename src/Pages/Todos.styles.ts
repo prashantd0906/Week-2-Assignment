@@ -1,7 +1,6 @@
 import {Box, Button, List, Paper, Stack, TextField} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
-// Main container
 export const Container = styled(Box)(() => ({
   maxWidth: '800px',
   margin: '0 auto',
@@ -20,13 +19,13 @@ export const HeaderBox = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
-// Styled list
+
 export const StyledList = styled(List)(() => ({
   maxHeight: 200,
   overflowY: 'auto',
 }));
 
-// Stack for each task input + button
+
 export const TaskStack = styled(Stack)(() => ({
   display: 'flex',
   alignItems: 'center',
@@ -34,7 +33,7 @@ export const TaskStack = styled(Stack)(() => ({
   marginBottom: '12px',
 }));
 
-// Task input
+
 export const TaskTextField = styled(TextField)(() => ({
   flexGrow: 1,
   '& .MuiOutlinedInput-root': {
@@ -62,7 +61,6 @@ export const SubmitButton = styled(Button)(() => ({
   fontWeight: 'bold',
 }));
 
-// Card wrapper for sections
 export const CardBox = styled(Paper)(() => ({
   padding: '24px',
   borderRadius: '12px',
