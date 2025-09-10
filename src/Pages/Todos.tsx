@@ -159,7 +159,7 @@ export default function TodoForm() {
                   onClick={() => {
                     const newTodos = [...submittedTodos];
                     newTodos.splice(index, 1);
-                    setSubmittedTodos(newTodos); 
+                    setSubmittedTodos(newTodos);
                   }}
                 >
                   Delete

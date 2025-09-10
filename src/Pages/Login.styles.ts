@@ -33,9 +33,7 @@ export const ErrorText = styled(Typography)(() => ({
 // TextField
 export const StyledTextField = styled(TextField)(() => ({
   marginBottom: '16px',
-  '& .MuiOutlinedInput-root': {
     borderRadius: 8,
-  },
 }));
 
 // Button
