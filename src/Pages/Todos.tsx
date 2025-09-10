@@ -1,4 +1,4 @@
-import {Box, Divider, ListItem, ListItemText, Typography} from '@mui/material';
+import {Box, ListItem, ListItemText} from '@mui/material';
 import axios from 'axios';
 import {FieldArray, Form, Formik} from 'formik';
 import {useEffect, useState} from 'react';
@@ -9,8 +9,12 @@ import {
   AddButton,
   CardBox,
   Container,
+  DashboardTitle,
   DeleteButton,
   HeaderBox,
+  LogoutButton,
+  SectionTitle,
+  StyledDivider,
   StyledList,
   SubmitButton,
   TaskStack,
@@ -21,7 +25,8 @@ import {
 const schema = Yup.object({
   todos: Yup.array()
     .of(Yup.string().required('Task is required'))
-    .min(1, 'Add at least one task'),
+    .min(3, 'Task must be at least 3 characters')
+    .max(50, 'Task cannot exceed 50 characters'),
 });
 
 const initialValues = {
@@ -57,19 +62,15 @@ export default function TodoForm() {
   return (
     <Container>
       <HeaderBox>
-        <Typography variant="h5" fontWeight="bold">
-          Todo Dashboard
-        </Typography>
-        <DeleteButton variant="outlined" color="inherit" onClick={handleLogout}>
+        <DashboardTitle variant="h5">Todo Dashboard</DashboardTitle>
+        <LogoutButton variant="outlined" onClick={handleLogout}>
           Logout
-        </DeleteButton>
+        </LogoutButton>
       </HeaderBox>
 
       <CardBox elevation={3}>
-        <Typography variant="h6" gutterBottom>
-          API Todos (fetched)
-        </Typography>
-        <Divider sx={{mb: 2}} />
+        <SectionTitle variant="h6">API Todos (fetched)</SectionTitle>
+        <StyledDivider />
         <StyledList>
           {apiTodos.map((task, i) => (
             <ListItem key={i}>
@@ -80,10 +81,8 @@ export default function TodoForm() {
       </CardBox>
 
       <CardBox elevation={3}>
-        <Typography variant="h6" gutterBottom>
-          Add Your Todos
-        </Typography>
-        <Divider sx={{mb: 2}} />
+        <SectionTitle variant="h6">Add Your Todos</SectionTitle>
+        <StyledDivider />
 
         <Formik
           initialValues={initialValues}
@@ -118,7 +117,6 @@ export default function TodoForm() {
                             }
                           />
                           <DeleteButton
-                            color="error"
                             variant="outlined"
                             onClick={() => remove(index)}
                           >
@@ -128,7 +126,7 @@ export default function TodoForm() {
                       ))}
 
                       <AddButton variant="contained" onClick={() => push('')}>
-                        ➕ Add Task
+                        Add Task
                       </AddButton>
                     </Box>
                   )}
@@ -145,10 +143,8 @@ export default function TodoForm() {
 
       {submittedTodos.length > 0 && (
         <CardBox elevation={3}>
-          <Typography variant="h6" gutterBottom>
-            Submitted Todos
-          </Typography>
-          <Divider sx={{mb: 2}} />
+          <SectionTitle variant="h6">Submitted Todos</SectionTitle>
+          <StyledDivider />
           <StyledList>
             {submittedTodos.map((task, i) => (
               <ListItem key={i}>
