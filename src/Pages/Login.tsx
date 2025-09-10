@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useAuth} from '../auth/AuthContext';
 import {
   BackgroundBox,
   LoginPaper,
@@ -10,11 +10,10 @@ import {
   StyledTextField,
   LoginButton,
 } from './Login.styles';
-import { Container } from '@mui/material';
-
+import {Container} from '@mui/material';
 
 const Login = () => {
-  const { login } = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -55,7 +54,9 @@ const Login = () => {
               fullWidth
               label="Email"
               value={email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
               variant="outlined"
             />
 
@@ -64,7 +65,9 @@ const Login = () => {
               type="password"
               label="Password"
               value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
               variant="outlined"
             />
 
