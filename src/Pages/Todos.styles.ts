@@ -68,9 +68,6 @@ export const TaskStack = styled(Stack)(() => ({
 // Text field
 export const TaskTextField = styled(TextField)(() => ({
   flexGrow: 1,
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '8px',
-  },
 }));
 
 // Buttons

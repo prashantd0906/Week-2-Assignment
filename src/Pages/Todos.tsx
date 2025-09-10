@@ -24,9 +24,13 @@ import {
 // Validation
 const schema = Yup.object({
   todos: Yup.array()
-    .of(Yup.string().required('Task is required'))
-    .min(3, 'Task must be at least 3 characters')
-    .max(50, 'Task cannot exceed 50 characters'),
+    .of(
+      Yup.string()
+        .min(3, 'Task must be at least 3 characters')
+        .max(50, 'Task cannot exceed 50 characters')
+        .required('Task is required'),
+    )
+    .min(1, 'At least 1 task is required'),
 });
 
 const initialValues = {
@@ -41,7 +45,7 @@ export default function TodoForm() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login', {replace: true});
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -88,56 +92,57 @@ export default function TodoForm() {
           initialValues={initialValues}
           validationSchema={schema}
           onSubmit={(values, {resetForm}) => {
-            setSubmittedTodos(values.todos);
+            setSubmittedTodos((prev) => [...prev, ...values.todos]);
             resetForm();
           }}
         >
-          {({values, errors, touched, handleChange, handleBlur}) => {
-            const todosTouched = touched.todos as boolean[] | undefined;
-            const todosErrors = errors.todos as string[] | undefined;
+          {({values, errors, touched, handleChange, handleBlur}) => (
+            <Form>
+              <FieldArray name="todos">
+                {({push, remove}) => (
+                  <Box>
+                    {values.todos.map((todo, index) => (
+                      <TaskStack key={index}>
+                        <TaskTextField
+                          label={`Task ${index + 1}`}
+                          name={`todos[${index}]`}
+                          value={todo}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={Boolean(
+                            Array.isArray(touched.todos) &&
+                              touched.todos[index] &&
+                              Array.isArray(errors.todos) &&
+                              errors.todos[index],
+                          )}
+                          helperText={
+                            Array.isArray(touched.todos) &&
+                            touched.todos[index] &&
+                            Array.isArray(errors.todos) &&
+                            errors.todos[index]
+                          }
+                        />
+                        <DeleteButton
+                          variant="outlined"
+                          onClick={() => remove(index)}
+                        >
+                          Remove
+                        </DeleteButton>
+                      </TaskStack>
+                    ))}
 
-            return (
-              <Form>
-                <FieldArray name="todos">
-                  {({push, remove}) => (
-                    <Box>
-                      {values.todos.map((todo, index) => (
-                        <TaskStack key={index}>
-                          <TaskTextField
-                            label={`Task ${index + 1}`}
-                            name={`todos[${index}]`}
-                            value={todo}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={Boolean(
-                              todosTouched?.[index] && todosErrors?.[index],
-                            )}
-                            helperText={
-                              todosTouched?.[index] && todosErrors?.[index]
-                            }
-                          />
-                          <DeleteButton
-                            variant="outlined"
-                            onClick={() => remove(index)}
-                          >
-                            Remove
-                          </DeleteButton>
-                        </TaskStack>
-                      ))}
+                    <AddButton variant="contained" onClick={() => push('')}>
+                      Add Task
+                    </AddButton>
+                  </Box>
+                )}
+              </FieldArray>
 
-                      <AddButton variant="contained" onClick={() => push('')}>
-                        Add Task
-                      </AddButton>
-                    </Box>
-                  )}
-                </FieldArray>
-
-                <SubmitButton type="submit" variant="contained">
-                  Submit
-                </SubmitButton>
-              </Form>
-            );
-          }}
+              <SubmitButton type="submit" variant="contained">
+                Submit
+              </SubmitButton>
+            </Form>
+          )}
         </Formik>
       </CardBox>
 
@@ -146,9 +151,19 @@ export default function TodoForm() {
           <SectionTitle variant="h6">Submitted Todos</SectionTitle>
           <StyledDivider />
           <StyledList>
-            {submittedTodos.map((task, i) => (
-              <ListItem key={i}>
+            {submittedTodos.map((task, index) => (
+              <ListItem key={index}>
                 <ListItemText primary={task} />
+                <DeleteButton
+                  variant="outlined"
+                  onClick={() => {
+                    const newTodos = [...submittedTodos];
+                    newTodos.splice(index, 1);
+                    setSubmittedTodos(newTodos); 
+                  }}
+                >
+                  Delete
+                </DeleteButton>
               </ListItem>
             ))}
           </StyledList>
