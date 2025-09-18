@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": "f171",
+      "name": "Rohan",
+      "email": "ro@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2008",
+      "name": "Rohan",
+      "email": "harsh@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "9e3f",
+      "name": "Ishant",
+      "email": "ishant@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": "8b58",
+      "name": "Shyam",
+      "email": "shyam@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "3e21",
+      "name": "ro",
+      "email": "ro@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "cd9d",
+      "name": "ro",
+      "email": "ro@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2185",
+      "name": "deep",
+      "email": "deep@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "6684",
+      "name": "Harsh",
+      "email": "harsh@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "3bd3",
+      "name": "Akash",
+      "email": "akash@gmail.com",
+      "password": "akash1"
+    },
+    {
+      "id": "1bfc",
+      "name": "Rohan",
+      "email": "rohan@gmail.com",
+      "password": "rohan123"
+    }
+  ],
+  "todos": [
+    {
+      "id": "5939",
+      "title": "xvnn n"
+    },
+    {
+      "id": "0e06",
+      "title": "dfm vmnd v"
+    }
+  ]
+}
