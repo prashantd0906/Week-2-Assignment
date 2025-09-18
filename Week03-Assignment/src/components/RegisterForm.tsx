@@ -52,7 +52,7 @@ export default function Register() {
         .then(() => {
           setInitialValues(values);
           alert("Profile updated successfully!");
-          navigate("/login"); // redirect to login page
+          navigate("/login");
         })
         .catch(() => setError("Update failed"))
         .finally(() => {
