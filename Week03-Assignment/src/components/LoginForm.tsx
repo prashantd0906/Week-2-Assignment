@@ -14,15 +14,8 @@ import {Field, Form, Formik} from "formik";
 
 import {login} from "../slices/authSlice";
 import type {AppDispatch, RootState} from "../store/store";
-import {loginSchema} from "../validation/loginValidation";
-import {
-  buttonStyle,
-  cardStyle,
-  containerStyle,
-  errorTextStyle,
-  footerTextStyle,
-  titleStyle,
-} from "./LoginForm.style";
+import {useStyle} from "../styles/globalStyles";
+import {loginSchema} from "../validation/validation";
 
 export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,9 +25,9 @@ export default function LoginForm() {
   const [formError, setFormError] = useState<string | null>(null);
 
   return (
-    <Container sx={containerStyle}>
-      <Box sx={cardStyle}>
-        <Typography variant="h4" sx={titleStyle}>
+    <Container sx={useStyle.container}>
+      <Box sx={useStyle.card}>
+        <Typography variant="h4" sx={useStyle.title}>
           Login
         </Typography>
 
@@ -85,7 +78,7 @@ export default function LoginForm() {
               />
 
               {(formError || error) && (
-                <Typography color="error" sx={errorTextStyle}>
+                <Typography color="error" sx={useStyle.errorText}>
                   {formError || error}
                 </Typography>
               )}
@@ -94,13 +87,13 @@ export default function LoginForm() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={buttonStyle}
+                sx={useStyle.button}
                 disabled={isSubmitting || loading}
               >
                 {loading ? "Logging in..." : "Login"}
               </Button>
 
-              <Typography sx={footerTextStyle}>
+              <Typography sx={useStyle.footerText}>
                 Don’t have an account?{" "}
                 <Link component={RouterLink} to="/register" underline="hover">
                   Register

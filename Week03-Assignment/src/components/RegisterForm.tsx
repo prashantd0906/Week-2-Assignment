@@ -5,13 +5,8 @@ import {Button, Container, TextField, Typography} from "@mui/material";
 import {Field, Form, Formik} from "formik";
 
 import {type User, registerUser, updateUser} from "../api/api";
-import {registerSchema} from "../validation/registerValidation";
-import {
-  buttonStyle,
-  containerStyle,
-  errorTextStyle,
-  titleStyle,
-} from "./Register.style";
+import {useStyle} from "../styles/globalStyles";
+import {registerSchema} from "../validation/validation";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
@@ -57,7 +52,7 @@ export default function Register() {
         .then(() => {
           setInitialValues(values);
           alert("Profile updated successfully!");
-          navigate("/login"); // <-- redirect to login page
+          navigate("/login"); // redirect to login page
         })
         .catch(() => setError("Update failed"))
         .finally(() => {
@@ -68,8 +63,8 @@ export default function Register() {
   };
 
   return (
-    <Container maxWidth="xs" sx={containerStyle}>
-      <Typography variant="h4" sx={titleStyle}>
+    <Container maxWidth="xs" sx={useStyle.container}>
+      <Typography variant="h4" sx={useStyle.title}>
         {userId ? "Edit Profile" : "Register"}
       </Typography>
 
@@ -116,7 +111,7 @@ export default function Register() {
             ))}
 
             {error && (
-              <Typography color="error" sx={errorTextStyle}>
+              <Typography color="error" sx={useStyle.errorText}>
                 {error}
               </Typography>
             )}
@@ -125,7 +120,7 @@ export default function Register() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={buttonStyle}
+              sx={useStyle.button}
               disabled={isSubmitting || loading}
             >
               {loading

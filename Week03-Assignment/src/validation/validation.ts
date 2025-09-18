@@ -1,6 +1,12 @@
-// src/validation/registerValidation.ts
 import * as Yup from "yup";
 
+//Login Schema
+export const loginSchema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
+
+//Register Schema
 export const registerSchema = Yup.object({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
