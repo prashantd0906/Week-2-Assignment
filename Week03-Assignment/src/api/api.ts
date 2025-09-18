@@ -20,10 +20,7 @@ export async function registerUser(user: User): Promise<User> {
 }
 
 // Login
-export async function loginUser(
-  email: string,
-  password: string,
-): Promise<User | null> {
+export async function loginUser(email: string,password: string,): Promise<User | null> {
   return axios.get<User[]>(USERS_URL, {params: {email}}).then((res) => {
     if (!res.data || res.data.length === 0) return null;
     const user = res.data[0];

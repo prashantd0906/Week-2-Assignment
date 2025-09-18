@@ -60,7 +60,6 @@ const authSlice = createSlice({
     builder
       // Register
       .addCase(register.pending, (state) => {
-        state.loading = true;
         state.error = null;
       })
       .addCase(register.fulfilled, (state, action: PayloadAction<User>) => {
