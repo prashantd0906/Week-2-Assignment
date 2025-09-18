@@ -13,6 +13,12 @@ import {
 } from "@mui/material";
 
 import {type Todo, addTodo, deleteTodo, getUserTodos} from "../api/api";
+import {
+  BUTTON_TEXT,
+  FIELD_LABELS,
+  TITLES,
+  TODO_MESSAGES,
+} from "../constants/messages";
 
 export default function TodosPage() {
   const navigate = useNavigate();
@@ -35,7 +41,7 @@ export default function TodosPage() {
 
     getUserTodos(currentUserId)
       .then((data) => setTodos(data))
-      .catch(() => setError("Failed to fetch todos"))
+      .catch(() => setError(TODO_MESSAGES.FETCH_FAILED))
       .finally(() => setLoadingTodos(false));
   };
 
@@ -51,7 +57,7 @@ export default function TodosPage() {
     if (!currentUserId) return;
 
     if (!title.trim()) {
-      setError("Todo cannot be empty. Please enter at least 1 character.");
+      setError(TODO_MESSAGES.EMPTY_ERROR);
       return;
     }
 
@@ -64,10 +70,10 @@ export default function TodosPage() {
           setTodos((prev) => [...prev, newTodo]);
           setTitle("");
         } else {
-          setError("Failed to add todo");
+          setError(TODO_MESSAGES.ADD_FAILED);
         }
       })
-      .catch(() => setError("Error adding todo"))
+      .catch(() => setError(TODO_MESSAGES.ADD_ERROR))
       .finally(() => setAddingTodo(false));
   };
 
@@ -80,7 +86,7 @@ export default function TodosPage() {
       .then(() => {
         setTodos((prev) => prev.filter((t) => t.id !== todoId));
       })
-      .catch(() => setError("Failed to delete todo"));
+      .catch(() => setError(TODO_MESSAGES.DELETE_FAILED));
   };
 
   const handleLogout = () => {
@@ -98,9 +104,9 @@ export default function TodosPage() {
         alignItems="center"
         mb={2}
       >
-        <Typography variant="h4">Your Todos</Typography>
+        <Typography variant="h4">{TITLES.TODOS}</Typography>
         <Button variant="outlined" color="error" onClick={handleLogout}>
-          Logout
+          {BUTTON_TEXT.LOGOUT}
         </Button>
       </Stack>
 
@@ -112,7 +118,7 @@ export default function TodosPage() {
 
       <Stack direction="row" spacing={2} mb={2}>
         <TextField
-          label="New Todo"
+          label={FIELD_LABELS.newTodo}
           fullWidth
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -122,14 +128,14 @@ export default function TodosPage() {
           onClick={handleAddTodo}
           disabled={addingTodo || !currentUserId}
         >
-          Add
+          {BUTTON_TEXT.ADD_TODO}
         </Button>
       </Stack>
 
       {loadingTodos ? (
-        <Typography>Loading...</Typography>
+        <Typography>{TODO_MESSAGES.LOADING}</Typography>
       ) : todos.length === 0 ? (
-        <Typography>No todos yet. Add one above!</Typography>
+        <Typography>{TODO_MESSAGES.NO_TODOS}</Typography>
       ) : (
         todos.map((todo) => (
           <Card key={todo.id} style={{marginBottom: "10px", padding: "10px"}}>
@@ -140,7 +146,7 @@ export default function TodosPage() {
                   color="error"
                   onClick={() => handleDelete(todo.id!)}
                 >
-                  Delete
+                  {BUTTON_TEXT.DELETE_TODO}
                 </Button>
               }
             >

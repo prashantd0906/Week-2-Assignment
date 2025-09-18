@@ -1,9 +1,12 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type {PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-import { type User, loginUser, registerUser } from "../api/api";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../constants/messages";
-import { STORAGE_KEYS } from "../constants/messages";
+import {type User, loginUser, registerUser} from "../api/api";
+import {
+  ERROR_MESSAGES,
+  STORAGE_KEYS,
+  SUCCESS_MESSAGES,
+} from "../constants/messages";
 
 // State interface
 interface AuthState {
@@ -26,26 +29,33 @@ const initialState: AuthState = {
 // Register thunk
 export const register = createAsyncThunk<User, User>(
   "auth/register",
-  async (newUser, { rejectWithValue }) => {
+  async (newUser, {rejectWithValue}) => {
     const user = await registerUser(newUser);
     if (!user) return rejectWithValue(ERROR_MESSAGES.REGISTRATION_FAILED);
     return user;
-  }
+  },
 );
 
 // Login thunk
 export const login = createAsyncThunk<
-  { user: User; token: string },
-  { email: string; password: string }
->("auth/login", async ({ email, password }, { rejectWithValue }) => {
-  const user = await loginUser(email, password);
-  if (!user) return rejectWithValue(ERROR_MESSAGES.INVALID_CREDENTIALS);
+  {user: User; token: string},
+  {email: string; password: string}
+>("auth/login", ({email, password}, {rejectWithValue}) => {
+  return loginUser(email, password)
+    .then((user) => {
+      if (!user) {
+        return rejectWithValue("Invalid credentials. Please register first.");
+      }
 
-  const fakeToken = btoa(`${user.email}:${Date.now()}`);
-  localStorage.setItem(STORAGE_KEYS.TOKEN, fakeToken);
-  localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, user.id!);
+      const fakeToken = btoa(`${user.email}:${Date.now()}`);
+      localStorage.setItem(STORAGE_KEYS.TOKEN, fakeToken);
+      localStorage.setItem(STORAGE_KEYS.CURRENT_USER_ID, user.id!);
 
-  return { user, token: fakeToken };
+      return {user, token: fakeToken};
+    })
+    .catch(() => {
+      return rejectWithValue("Invalid credentials. Please register first.");
+    });
 });
 
 // Slice
@@ -100,5 +110,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const {logout} = authSlice.actions;
 export default authSlice.reducer;

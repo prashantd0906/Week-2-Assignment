@@ -12,6 +12,13 @@ import {
 } from "@mui/material";
 import {Field, Form, Formik} from "formik";
 
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGES,
+  FIELD_LABELS,
+  FOOTER_TEXT,
+  TITLES,
+} from "../constants/messages";
 import {login} from "../slices/authSlice";
 import type {AppDispatch, RootState} from "../store/store";
 import {useStyle} from "../styles/globalStyles";
@@ -28,7 +35,7 @@ export default function LoginForm() {
     <Container sx={useStyle.container}>
       <Box sx={useStyle.card}>
         <Typography variant="h4" sx={useStyle.title}>
-          Login
+          {TITLES.LOGIN}
         </Typography>
 
         <Formik
@@ -47,7 +54,7 @@ export default function LoginForm() {
                 }
               })
               .catch(() => {
-                setFormError("Something went wrong. Please try again.");
+                setFormError(ERROR_MESSAGES.GENERIC_ERROR);
               })
               .finally(() => {
                 setSubmitting(false);
@@ -59,7 +66,7 @@ export default function LoginForm() {
               <Field
                 as={TextField}
                 name="email"
-                label="Email"
+                label={FIELD_LABELS.email}
                 fullWidth
                 margin="normal"
                 error={Boolean(touched.email && errors.email)}
@@ -70,7 +77,7 @@ export default function LoginForm() {
                 as={TextField}
                 type="password"
                 name="password"
-                label="Password"
+                label={FIELD_LABELS.password}
                 fullWidth
                 margin="normal"
                 error={Boolean(touched.password && errors.password)}
@@ -90,13 +97,13 @@ export default function LoginForm() {
                 sx={useStyle.button}
                 disabled={isSubmitting || loading}
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? BUTTON_TEXT.LOGGING_IN : BUTTON_TEXT.LOGIN}
               </Button>
 
               <Typography sx={useStyle.footerText}>
-                Don’t have an account?{" "}
+                {FOOTER_TEXT.NO_ACCOUNT}{" "}
                 <Link component={RouterLink} to="/register" underline="hover">
-                  Register
+                  {FOOTER_TEXT.REGISTER_LINK}
                 </Link>
               </Typography>
             </Form>

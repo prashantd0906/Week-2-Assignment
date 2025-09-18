@@ -5,6 +5,12 @@ import {Button, Container, TextField, Typography} from "@mui/material";
 import {Field, Form, Formik} from "formik";
 
 import {type User, registerUser, updateUser} from "../api/api";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGES,
+  FIELD_LABELS,
+  SUCCESS_MESSAGES,
+} from "../constants/messages";
 import {useStyle} from "../styles/globalStyles";
 import {registerSchema} from "../validation/validation";
 
@@ -37,11 +43,9 @@ export default function Register() {
         .then((res) => {
           setUserId(res.id!);
           setInitialValues(res);
-          alert(
-            "Registration successful! You can now edit your profile below.",
-          );
+          alert(SUCCESS_MESSAGES.REGISTER_SUCCESS);
         })
-        .catch(() => setError("Registration failed"))
+        .catch(() => setError(ERROR_MESSAGES.REGISTRATION_FAILED))
         .finally(() => {
           setLoading(false);
           setSubmitting(false);
@@ -51,10 +55,10 @@ export default function Register() {
       updateUser(userId, values)
         .then(() => {
           setInitialValues(values);
-          alert("Profile updated successfully!");
+          alert(SUCCESS_MESSAGES.UPDATE_SUCCESS);
           navigate("/login");
         })
-        .catch(() => setError("Update failed"))
+        .catch(() => setError(ERROR_MESSAGES.UPDATE_FAILED))
         .finally(() => {
           setLoading(false);
           setSubmitting(false);
@@ -78,15 +82,7 @@ export default function Register() {
       >
         {({errors, touched, isSubmitting}) => (
           <Form>
-            {[
-              "firstName",
-              "lastName",
-              "email",
-              "age",
-              "gender",
-              "phoneNo",
-              "password",
-            ].map((field) => (
+            {Object.keys(FIELD_LABELS).map((field) => (
               <Field
                 key={field}
                 as={TextField}
@@ -98,7 +94,7 @@ export default function Register() {
                       ? "password"
                       : "text"
                 }
-                label={field.charAt(0).toUpperCase() + field.slice(1)}
+                label={FIELD_LABELS[field]}
                 fullWidth
                 margin="normal"
                 error={Boolean(
@@ -125,11 +121,11 @@ export default function Register() {
             >
               {loading
                 ? userId
-                  ? "Updating..."
-                  : "Registering..."
+                  ? BUTTON_TEXT.UPDATING
+                  : BUTTON_TEXT.REGISTERING
                 : userId
-                  ? "Update Profile"
-                  : "Register"}
+                  ? BUTTON_TEXT.UPDATE
+                  : BUTTON_TEXT.REGISTER}
             </Button>
           </Form>
         )}
